@@ -2,14 +2,16 @@ import React, { Component, PropTypes } from 'react';
 import { map } from 'lodash';
 import { connect } from 'react-redux';
 import { pushState } from 'redux-router';
-import { GoogleMap, Marker } from 'react-google-maps';
+import { GoogleMap, Marker, InfoWindow } from 'react-google-maps';
 import { requestLocationPermission, fetchCheckinsByFilter } from '../actions';
+
+const pugImg = require('../assets/pug.png')
 
 function mapStateToProps(state) {
   const { checkinsByFilter, geolocation } = state;
   const markers = state.checkinsByFilter.checkins.map((checkin, index) => {
     return {
-      ...checkin,
+      checkin,
       position: {
         lat: checkin.latitude,
         lng: checkin.longitude
@@ -39,11 +41,9 @@ export default class Home extends Component {
   }
 
   renderMarkers(markers) {
-    markers.map((marker, index) => {
-      return (
-        <Marker {...marker} />
-      );
-    })
+    return markers.map((marker, index) => {
+      return <Marker {...marker}/>;
+    });
   }
 
   renderCurrentLocationMarker(){
@@ -51,16 +51,18 @@ export default class Home extends Component {
     if(geolocation.current){
       const position = { lat: geolocation.current[0], lng: geolocation.current[1] }
       const icon = {
-        url: 'http://www.jokathopugs.com.br/imagens/pug.png',
+        url: pugImg,
         scaledSize: {
           height: 67,
           width: 55
-        }
+        },
+        labelOrigin: {x: 25 ,y: 40}
       }
       return (
         <Marker
           position={position}
           icon={icon}
+          label={{text: '我'}}
           defaultAnimation={2}
         />
       )
@@ -87,7 +89,6 @@ export default class Home extends Component {
             containerProps={{ style: { height: '100%', width: '100%' } }}
             defaultZoom={12}
             defaultCenter={this.currentMapCenter()}
-            center={this.currentMapCenter()}
           >
             {this.renderCurrentLocationMarker()}
             {this.renderMarkers(markers)}

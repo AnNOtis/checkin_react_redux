@@ -15,7 +15,7 @@ export function fetchCheckinsStart() {
 export function fetchCheckinsSuccess(response) {
   return {
     type: FETCH_CHECKINS_SUCCESS,
-    response
+    checkins: response.checkins
   }
 }
 

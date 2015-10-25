@@ -23,7 +23,7 @@ export default function checkinsByFilter(state = initialState, action) {
   case FETCH_CHECKINS_SUCCESS:
     return merge({}, state, {
       isFetching: false,
-      response: action.response
+      checkins: action.checkins
     });
   case FETCH_CHECKINS_FAILED:
     return merge({}, state, {

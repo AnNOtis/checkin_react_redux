@@ -15,6 +15,6 @@ export default function apiClient(endpoint, options = {}) {
 
       const camelizedJson = camelizeKeys(json);
 
-      return Object.assign({}, camelizedJson());
+      return camelizedJson;
     });
 }
