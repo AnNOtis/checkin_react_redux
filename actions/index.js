@@ -102,3 +102,16 @@ export function requestLocationPermission(dispatch) {
     }
   };
 }
+
+export const MODE = {
+  MAP: 'map',
+  LIST: 'list'
+}
+
+export const SWITCH_DISPLAY_MODE = 'SWITCH_DISPLAY_MODE';
+export function switchDisplayMode(mode){
+  return {
+    type: SWITCH_DISPLAY_MODE,
+    mode
+  }
+};
