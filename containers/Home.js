@@ -3,7 +3,7 @@ import { map } from 'lodash';
 import { connect } from 'react-redux';
 import { pushState } from 'redux-router';
 import { GoogleMap, Marker, InfoWindow } from 'react-google-maps';
-import { requestLocationPermission, fetchCheckinsByFilter } from '../actions';
+import { requestLocationPermission, fetchCheckinsByFilter, setDistanceFilter } from '../actions';
 import List from '../components/List';
 import CheckinCard from '../components/CheckinCard';
 
@@ -31,7 +31,7 @@ function mapStateToProps(state) {
 
 @connect(
   state => (mapStateToProps(state)),
-  { requestLocationPermission, fetchCheckinsByFilter }
+  { requestLocationPermission, fetchCheckinsByFilter, setDistanceFilter }
 )
 export default class Home extends Component {
   constructor(props) {
@@ -41,12 +41,10 @@ export default class Home extends Component {
   componentDidMount() {
     const {
       requestLocationPermission,
-      fetchCheckinsByFilter,
-      geolocation,
-      checkinsByFilter
+      fetchCheckinsByFilter
     } = this.props
     requestLocationPermission();
-    fetchCheckinsByFilter(checkinsByFilter.distanceFilter, geolocation.current);
+    fetchCheckinsByFilter();
   }
 
   renderMarkers(markers) {
@@ -78,6 +76,12 @@ export default class Home extends Component {
     }
   }
 
+  switchDistanceFilter(distance){
+    const { setDistanceFilter, fetchCheckinsByFilter } = this.props
+    setDistanceFilter(distance);
+    fetchCheckinsByFilter();
+  }
+
   currentMapCenter(){
     const { geolocation } = this.props
     if(geolocation.current){
@@ -97,6 +101,10 @@ export default class Home extends Component {
       <div>
         <h1>列出附近 {checkinsByFilter.distanceFilter } 公里的打卡</h1>
         <h2>目前位置: {geolocation.isRequesting ? '正在搜尋所在位置..' : `${geolocation.current.lat}, ${geolocation.current.lng}`}</h2>
+        <button onClick={()=> this.switchDistanceFilter(0.1)}>100 公尺</button>
+        <button onClick={()=> this.switchDistanceFilter(0.5)}>500 公尺</button>
+        <button onClick={()=> this.switchDistanceFilter(1)}>1 公里</button>
+        <button onClick={()=> this.switchDistanceFilter(5)}>5 公里</button>
         <section style={{height: '500px', width: '100%'}}>
           <GoogleMap
             containerProps={{ style: { height: '100%', width: '100%' } }}

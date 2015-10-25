@@ -22,7 +22,7 @@ export default function checkinsByFilter(state = initialState, action) {
       distanceFilter: action.radius
     });
   case FETCH_CHECKINS_SUCCESS:
-    return merge({}, state, {
+    return Object.assign({}, state, {
       isFetching: false,
       checkins: action.checkins
     });

@@ -28,11 +28,16 @@ export function fetchCheckinsFailed(error) {
   }
 }
 
-export function fetchCheckinsByFilter(radius, position) {
-  return function (dispatch) {
+export function fetchCheckinsByFilter() {
+  return function (dispatch, getState) {
+    const { geolocation, checkinsByFilter } = getState();
+    const radius = checkinsByFilter.distanceFilter;
+    const position = geolocation.current;
+
     dispatch(fetchCheckinsStart(radius));
 
-    return apiClient('checkins', { radius: radius, lat: position.lat, lng: position.lng })
+    const query = `?radius=${radius}&lat=${position.lat}&lng=${position.lng}`;
+    return apiClient(`checkins${query}`)
       .then(json => {
         dispatch(fetchCheckinsSuccess(json))
       })
