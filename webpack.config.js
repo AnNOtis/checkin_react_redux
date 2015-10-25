@@ -29,6 +29,10 @@ module.exports = {
         test: /\.(png|gif)$/,
         loader: 'url-loader',
         limit: 10000
+      },
+      {
+        test: /\.sass$/,
+        loaders: ['style', 'css', 'sass?indentedSyntax']
       }
     ]
   }
