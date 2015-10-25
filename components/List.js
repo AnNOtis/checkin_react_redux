@@ -2,17 +2,6 @@ import React, { Component, PropTypes } from 'react';
 const loadingImg = require('../assets/loading.gif');
 
 export default class List extends Component {
-  renderLoadMore() {
-    const { isFetching, onLoadMoreClick } = this.props;
-    return (
-      <button style={{ fontSize: '150%' }}
-              onClick={onLoadMoreClick}
-              disabled={isFetching}>
-        {isFetching ? 'Loading...' : 'Load More'}
-      </button>
-    );
-  }
-
   render() {
     const { isFetching, items, renderItem } = this.props;
 

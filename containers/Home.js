@@ -5,6 +5,7 @@ import { pushState } from 'redux-router';
 import { GoogleMap, Marker, InfoWindow } from 'react-google-maps';
 import { requestLocationPermission, fetchCheckinsByFilter } from '../actions';
 import List from '../components/List';
+import CheckinCard from '../components/CheckinCard';
 
 const pugImg = require('../assets/pug.png')
 
@@ -87,13 +88,7 @@ export default class Home extends Component {
   }
 
   renderCheckin(checkin){
-    return (
-      <div key={checkin.id}>
-        <h3>{checkin.name}</h3>
-        <h3>{checkin.address}</h3>
-        <h3>{checkin.photo.url}</h3>
-      </div>
-    )
+    return <CheckinCard key={checkin.id} checkin={checkin}/>;
   }
 
   render() {
