@@ -101,7 +101,7 @@ export default class Home extends Component {
     return (
       <div>
         <h1>列出附近 {checkinsByFilter.distanceFilter } 公里的打卡</h1>
-        <h2>目前位置: {geolocation.isRequesting ? '正在搜尋所在位置..' : `${geolocation.current.lat}, ${geolocation.current.lng}</h2>
+        <h2>目前位置: {geolocation.isRequesting ? '正在搜尋所在位置..' : `${geolocation.current.lat}, ${geolocation.current.lng}`}</h2>
         <section style={{height: '500px', width: '100%'}}>
           <GoogleMap
             containerProps={{ style: { height: '100%', width: '100%' } }}
