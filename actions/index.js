@@ -1,14 +1,51 @@
-export const FETCH_CHECKINS = 'FETCH_CHECKINS';
+import fetch from 'isomorphic-fetch';
+import apiClient from '../libs/apiClient';
+
+export const FETCH_CHECKINS_START = 'FETCH_CHECKINS_START';
 export const FETCH_CHECKINS_SUCCESS = 'FETCH_CHECKINS_SUCCESS';
-export const FETCH_CHECKINS_FAILURE = 'FETCH_CHECKINS_FAILURE';
+export const FETCH_CHECKINS_FAILED = 'FETCH_CHECKINS_FAILED';
 export const LOAD_CHECKINS = 'LOAD_CHECKINS';
+
+export function fetchCheckinsStart() {
+  return {
+    type: FETCH_CHECKINS_START
+  }
+}
+
+export function fetchCheckinsSuccess(response) {
+  return {
+    type: FETCH_CHECKINS_SUCCESS,
+    response
+  }
+}
+
+export function fetchCheckinsFailed(error) {
+  return {
+    type: FETCH_CHECKINS_FAILED,
+    error
+  }
+}
+
+export function fetchCheckinsByFilter(filter = 0.5) {
+  return function (dispatch) {
+    dispatch(fetchCheckinsStart());
+
+    return apiClient('checkins', { distance: filter })
+      .then(json => {
+        dispatch(fetchCheckinsSuccess(json))
+      })
+      .catch(error => {
+        console.warn(error);
+        dispatch(fetchCheckinsFailed(error));
+      });
+  };
+}
 
 export const SET_DISTANCE_FILTER = 'SET_DISTANCE_FILTER';
 
-
-export function setVisibilityFilter(filter) {
+export function setDistanceFilter(filter) {
   return {
-    type: SET_VISIBILITY_FILTER,
+    type: SET_DISTANCE_FILTER,
     filter
   };
 }
@@ -48,6 +85,7 @@ export function requestLocationPermission(dispatch) {
       dispatch(requestCurrentLocationFailed());
     } else {
       dispatch( (dispatch) => {
+          dispatch(requestCurrentLocation());
           navigator.geolocation.getCurrentPosition(
             position => { dispatch(requestCurrentLocationSuccess(position)) },
             error => { dispatch(requestCurrentLocationFailed(error)) }
