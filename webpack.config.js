@@ -26,9 +26,8 @@ module.exports = {
         include: __dirname
       },
       {
-        test: /\.png$/,
+        test: /\.(png|gif)$/,
         loader: 'url-loader',
-        query: { mimetype: 'image/png' },
         limit: 10000
       }
     ]

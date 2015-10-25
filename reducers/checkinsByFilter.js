@@ -19,6 +19,7 @@ export default function checkinsByFilter(state = initialState, action) {
   case FETCH_CHECKINS_START:
     return merge({}, state, {
       isFetching: true,
+      distanceFilter: action.radius
     });
   case FETCH_CHECKINS_SUCCESS:
     return merge({}, state, {

@@ -6,9 +6,11 @@ export const FETCH_CHECKINS_SUCCESS = 'FETCH_CHECKINS_SUCCESS';
 export const FETCH_CHECKINS_FAILED = 'FETCH_CHECKINS_FAILED';
 export const LOAD_CHECKINS = 'LOAD_CHECKINS';
 
-export function fetchCheckinsStart() {
+export function fetchCheckinsStart(radius, position) {
   return {
-    type: FETCH_CHECKINS_START
+    type: FETCH_CHECKINS_START,
+    radius,
+    position
   }
 }
 
@@ -26,11 +28,11 @@ export function fetchCheckinsFailed(error) {
   }
 }
 
-export function fetchCheckinsByFilter(filter = 0.5) {
+export function fetchCheckinsByFilter(radius, position) {
   return function (dispatch) {
-    dispatch(fetchCheckinsStart());
+    dispatch(fetchCheckinsStart(radius));
 
-    return apiClient('checkins', { distance: filter })
+    return apiClient('checkins', { radius: radius, lat: position.lat, lng: position.lng })
       .then(json => {
         dispatch(fetchCheckinsSuccess(json))
       })
