@@ -15,13 +15,23 @@
     width: 100%
     height: 100%
   .header-column, a.header-column
-    flex-grow: 1
+    height: 100%
+    flex: 1
     color: #FFF
     line-height: bu(2)
     padding: 0 bu()
     background-color: $c-main
     text-decoration: none
+    cursor: pointer
     &:active
       background-color: darken($c-main, 10%)
     &:hover
       background-color: lighten($c-main, 10%)
+    img
+      display: inline-block
+      height: bu()
+      margin: bu(0.5)
+      margin-right: 0
+      border-radius: 5px
+      background-color: #FFF
+      float: right

@@ -121,6 +121,7 @@ export function switchDisplayMode(mode){
 export const LOGIN_START = 'LOGIN_START';
 export const LOGIN_FAILED = 'LOGIN_FAILED';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGOUT = 'LOGOUT';
 export const SET_AUTH = 'SET_AUTH';
 export function loginStart(data){
   return {
@@ -151,6 +152,13 @@ export function setAuth(auth){
   };
 }
 
+export function logout(){
+  storage.remove('auth')
+  return {
+    type: LOGOUT
+  };
+}
+
 export function loadStorageAuth(){
   return function (dispatch, getState){
     const storateAuth = storage.get('auth')
@@ -178,7 +186,6 @@ export function login(data){
         dispatch(loginSuccess(json))
       })
       .catch(error => {
-        debugger
         console.warn(error);
         dispatch(loginFailed(error));
       });
