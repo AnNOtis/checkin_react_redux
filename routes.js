@@ -3,6 +3,7 @@ import { Route, IndexRoute } from 'react-router';
 import App from './containers/App';
 import Home from './containers/Home';
 import Login from './containers/Login';
+import Signup from './containers/Signup';
 import NotFound from './containers/NotFound';
 
 export default (
@@ -16,8 +17,8 @@ export default (
     */ }
 
     <Route path='login' component={Login}/>
-    { /* Routes
     <Route path='signup' component={Signup}/>
+    { /* Routes
     */ }
 
     { /* Catch all route */ }

@@ -1,7 +1,9 @@
 import fetch from 'isomorphic-fetch';
-import apiClient from '../libs/apiClient';
+import { pushState } from 'redux-router';
 import { isEmpty } from 'lodash';
 import storage from 'store';
+import uuid from 'uuid';
+import apiClient from '../libs/apiClient';
 
 export const FETCH_CHECKINS_START = 'FETCH_CHECKINS_START';
 export const FETCH_CHECKINS_SUCCESS = 'FETCH_CHECKINS_SUCCESS';
@@ -188,6 +190,61 @@ export function login(data){
       .catch(error => {
         console.warn(error);
         dispatch(loginFailed(error));
+      });
+  };
+}
+
+export const SIGNUP_START = 'SIGNUP_START';
+export const SIGNUP_FAILED = 'SIGNUP_FAILED';
+export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
+
+export function signupStart(data){
+  return {
+    type: SIGNUP_START,
+    data
+  };
+}
+
+export function signupFailed(response){
+  return {
+    type: SIGNUP_FAILED,
+    errors: response.errors
+  };
+}
+
+export function signupSuccess(response){
+  storage.set('auth', response);
+  return {
+    type: SIGNUP_SUCCESS,
+    response
+  };
+}
+
+export function signup(data){
+  return function (dispatch, getState) {
+    dispatch(signupStart(data));
+
+    const formData = new FormData();
+    formData.append('name', data.name);
+    formData.append('email', data.email);
+    formData.append('avatar', data.avatar);
+    formData.append('password', data.password);
+    formData.append('password_confirmation', data.passwordConfirmation);
+    formData.append('device_token', uuid.v4());
+    return apiClient(
+        'registrations',
+        {
+          method: 'POST',
+          body: formData
+        }
+      )
+      .then(json => {
+        dispatch(signupSuccess(json));
+        dispatch(pushState(null, '/login'));
+      })
+      .catch(error => {
+        console.warn(error);
+        dispatch(signupFailed(error));
       });
   };
 }

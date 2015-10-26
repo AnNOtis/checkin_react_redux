@@ -1,12 +1,12 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { pushState } from 'redux-router';
-import LoginForm from '../components/LoginForm';
-import { login, loadAuth } from '../actions';
 import { isEmpty } from 'lodash';
+import SignupForm from '../components/SignupForm';
+import { signup } from '../actions';
 
-@connect(state => ({auth: state.auth}), { login, pushState })
-export default class Login extends Component {
+@connect(state => ({auth: state.auth, signupForm: state.signupForm}), { signup, pushState })
+export default class Signup extends Component {
   componentDidMount(){
     this.redirectIfLogined()
   }
@@ -23,14 +23,15 @@ export default class Login extends Component {
   }
 
   handleSubmit(data) {
-    this.props.login(data);
+    this.props.signup(data);
   }
 
   render() {
-    const { auth } = this.props;
+    const { signupForm } = this.props;
+
     return (
       <div>
-        <LoginForm onSubmit={this.handleSubmit.bind(this)} errorMessage={auth.errorMessage}/>
+        <SignupForm onSubmit={this.handleSubmit.bind(this)} errorMessage={signupForm.errorMessage}/>
       </div>
     );
   }

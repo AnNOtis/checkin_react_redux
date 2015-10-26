@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { connectReduxForm } from 'redux-form';
+import { Link } from 'react-router';
 import { isEmpty } from 'lodash';
 require('../css/form.sass')
 require('../css/button.sass')
@@ -46,16 +47,17 @@ export default class LoginForm extends Component {
           <h2>登入</h2>
           {this.renderErrors()}
           <div className='form-field'>
-            <label>Email</label>
+            <label>* Email</label>
             <input type="text" {...email}/>
             {this.renderInlineError(email)}
           </div>
           <div className='form-field'>
-            <label>Password</label>
+            <label>* Password</label>
             <input type="password" {...password}/>
             {this.renderInlineError(password)}
           </div>
           <div className='form-field tr'>
+            <Link className='btn btn--unstyle' to='/signup'>signup new user</Link>
             <button className='btn' onClick={handleSubmit}>Submit</button>
           </div>
         </div>

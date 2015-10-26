@@ -6,6 +6,7 @@ import { reducer as formReducer } from 'redux-form';
 import geolocation from './geolocation';
 import checkinsByFilter from './checkinsByFilter';
 import auth from './auth';
+import signupForm from './signupForm';
 
 import { MODE, SWITCH_DISPLAY_MODE } from '../actions'
 
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
   checkinsByFilter,
   geolocation,
   auth,
+  signupForm,
   form: formReducer,
   router
 });

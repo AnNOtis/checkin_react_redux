@@ -1,12 +1,22 @@
 @import ./_variables
 
-.btn
+.btn, a.btn
+  display: inline-block
   border: none
   border-radius: 3px
   background-color: $c-second
   color: #FFF
   padding: 0 bu(0.5)
+  line-height: 2
+  text-decoration: none
   &:hover
     background-color: lighten($c-second, 10%)
   &:active
     background-color: darken($c-second, 10%)
+.btn.btn--unstyle
+  background-color: $c-grey-light
+  color: lighten($c-second, 20%)
+  &:hover
+    background-color: lighten($c-grey-light, 3%)
+  &:active
+    background-color: darken($c-grey-light, 10%)
