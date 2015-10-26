@@ -1,7 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import {connectReduxForm} from 'redux-form';
-
+import { connectReduxForm } from 'redux-form';
+import { isEmpty } from 'lodash';
+require('../css/form.sass')
+require('../css/button.sass')
+require('../css/tool.sass')
 
 function validateLogin(data, props) {
   const errors = {};
@@ -20,8 +23,15 @@ function validateLogin(data, props) {
   validate: validateLogin
 })
 export default class LoginForm extends Component {
-  constructor(props) {
-    super(props);
+  renderErrors() {
+    const { errorMessage } = this.props;
+    if(!isEmpty(errorMessage)){
+      return (<div className='error'>{errorMessage}</div>);
+    }
+  }
+
+  renderInlineError(field) {
+    return (field.error && field.touched && <div className='error'>{field.error}</div>)
   }
 
   render() {
@@ -29,17 +39,26 @@ export default class LoginForm extends Component {
       fields: {email, password},
       handleSubmit
     } = this.props;
+
     return (
-      <form onSubmit={handleSubmit}>
-        <label>Email</label>
-        <input type="text" {...email}/>
-        {email.error && email.touched && <div>{email.error}</div>}
-
-        <label>Password</label>
-        <input type="password" {...password}/>
-        {password.error && password.touched && <div>{password.error}</div>}
-
-        <button onClick={handleSubmit}>Submit</button>
+      <form className='form' onSubmit={handleSubmit}>
+        <div className='form-wrapper'>
+          <h2>登入</h2>
+          {this.renderErrors()}
+          <div className='form-field'>
+            <label>Email</label>
+            <input type="text" {...email}/>
+            {this.renderInlineError(email)}
+          </div>
+          <div className='form-field'>
+            <label>Password</label>
+            <input type="password" {...password}/>
+            {this.renderInlineError(password)}
+          </div>
+          <div className='form-field tr'>
+            <button className='btn' onClick={handleSubmit}>Submit</button>
+          </div>
+        </div>
       </form>
     );
   }

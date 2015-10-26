@@ -1,0 +1,43 @@
+@import ./_variables
+.form
+  padding: bu()
+  background-color: #FFF
+  font-size: $font-size-m
+  line-height: 2
+
+  .form-wrapper
+    display: block
+    max-width: 500px
+    margin-left: auto
+    margin-right: auto
+
+  .form-field
+    margin-bottom: bu()
+    .error
+      display: inline
+      font-size: $font-size
+      border-radius: 3px
+      padding-left: bu(0.5)
+      padding-right: bu(0.5)
+
+  label, input, .error
+    display: block
+    width: 100%
+    line-height: 2
+
+  .error
+    border: 2px solid $c-warning
+    color: $c-warning
+    border-radius: 5px
+    padding-left: bu()
+    padding-right: bu()
+
+  input
+    background-color: $c-grey-light
+    border: 0
+    border-radius: 5px
+    padding-left: bu()
+    padding-right: bu()
+    &:focus
+      outline: none
+      box-shadow: inset 0px 0px 3px $c-grey
