@@ -21,7 +21,7 @@ export default class Header extends Component {
       return (
         <div className='header-column tr' onClick={logout}>
           <span>{auth.user.name} 登出</span>
-          <img src={`http://localhost:3333/${auth.user.avatar.url}`}/>
+          <img src={auth.user.avatar.url}/>
         </div>
       );
     }

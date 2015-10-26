@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 require('../css/card.sass');
-const pugImg = require('../assets/pug.png');
+
 export default class CheckinCard extends Component {
   renderCheckinDescription(){
     const { checkin } = this.props;
@@ -16,7 +16,7 @@ export default class CheckinCard extends Component {
       <div className='card' >
         <div className='card-header'>
           <div className='user'>
-            <img src={pugImg}/>
+            <img src={checkin.user.avatar.url}/>
           </div>
           <div className='title'>{this.renderCheckinDescription()}</div>
           <p className='subtitle'>{checkin.address}</p>
