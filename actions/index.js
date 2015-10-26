@@ -1,5 +1,7 @@
 import fetch from 'isomorphic-fetch';
 import apiClient from '../libs/apiClient';
+import { isEmpty } from 'lodash';
+import storage from 'store';
 
 export const FETCH_CHECKINS_START = 'FETCH_CHECKINS_START';
 export const FETCH_CHECKINS_SUCCESS = 'FETCH_CHECKINS_SUCCESS';
@@ -114,4 +116,71 @@ export function switchDisplayMode(mode){
     type: SWITCH_DISPLAY_MODE,
     mode
   }
-};
+}
+
+export const LOGIN_START = 'LOGIN_START';
+export const LOGIN_FAILED = 'LOGIN_FAILED';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const SET_AUTH = 'SET_AUTH';
+export function loginStart(data){
+  return {
+    type: LOGIN_START,
+    data
+  };
+}
+
+export function loginFailed(response){
+  return {
+    type: LOGIN_FAILED,
+    errors: response.errors
+  };
+}
+
+export function loginSuccess(response){
+  storage.set('auth', response);
+  return {
+    type: LOGIN_SUCCESS,
+    response
+  };
+}
+
+export function setAuth(auth){
+  return {
+    type: SET_AUTH,
+    auth
+  };
+}
+
+export function loadStorageAuth(){
+  return function (dispatch, getState){
+    const storateAuth = storage.get('auth')
+    if(!isEmpty(storateAuth)){
+      return dispatch(setAuth(storateAuth));
+    }
+  }
+}
+
+export function login(data){
+  return function (dispatch, getState) {
+    dispatch(loginStart(data));
+
+    const formData = new FormData();
+    formData.append('email', data.email);
+    formData.append('password', data.password);
+    return apiClient(
+        'users/login',
+        {
+          method: 'POST',
+          body: formData
+        }
+      )
+      .then(json => {
+        dispatch(loginSuccess(json))
+      })
+      .catch(error => {
+        debugger
+        console.warn(error);
+        dispatch(loginFailed(error));
+      });
+  };
+}

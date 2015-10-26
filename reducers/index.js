@@ -5,6 +5,7 @@ import { reducer as formReducer } from 'redux-form';
 
 import geolocation from './geolocation';
 import checkinsByFilter from './checkinsByFilter';
+import auth from './auth';
 
 import { MODE, SWITCH_DISPLAY_MODE } from '../actions'
 
@@ -18,9 +19,10 @@ function home(state={mode: MODE.list}, action){
 }
 
 const rootReducer = combineReducers({
+  home,
   checkinsByFilter,
   geolocation,
-  home,
+  auth,
   form: formReducer,
   router
 });
