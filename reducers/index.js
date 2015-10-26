@@ -1,6 +1,7 @@
 import merge from 'lodash/object/merge';
 import { routerStateReducer as router } from 'redux-router';
 import { combineReducers } from 'redux';
+import { reducer as formReducer } from 'redux-form';
 
 import geolocation from './geolocation';
 import checkinsByFilter from './checkinsByFilter';
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
   checkinsByFilter,
   geolocation,
   home,
+  form: formReducer,
   router
 });
 

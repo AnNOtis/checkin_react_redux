@@ -32,7 +32,7 @@ module.exports = {
       },
       {
         test: /\.sass$/,
-        loaders: ['style','css', 'sass?indentedSyntax']
+        loaders: ['style', 'css', 'sass?indentedSyntax']
       }
     ]
   }
