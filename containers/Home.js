@@ -13,8 +13,9 @@ import {
 import List from '../components/List';
 import CheckinCard from '../components/CheckinCard';
 
-require('../css/home.sass')
-const pugImg = require('../assets/pug.png')
+require('../css/home.sass');
+require('../css/button.sass')
+const pugImg = require('../assets/pug.png');
 
 function mapStateToProps(state) {
   const { checkinsByFilter, geolocation, home } = state;
@@ -124,7 +125,7 @@ export default class Home extends Component {
     );
   }
 
-  renderList(){
+  renderList() {
     const { checkinsByFilter } = this.props;
     return(
       <List
@@ -135,24 +136,48 @@ export default class Home extends Component {
     );
   }
 
+  renderDistanceFilterButtons() {
+    const { geolocation, checkinsByFilter: { distanceFilter } } = this.props
+    const buttons = [0.1, 0.5, 1, 5, 50, 500].map((distance)=>{
+      const text = distance < 1 ? `${distance * 1000} 公尺` : `${distance} 公里`
+      return (
+        <button
+          key={distance}
+          className='btn'
+          onClick={()=> this.switchDistanceFilter(distance)}
+          disabled={distanceFilter == distance}>
+          {text}
+        </button>
+      );
+    });
+
+    return (
+      <div className='operation-bar'>
+        <h3 className='title'>
+          目前位置: {geolocation.isRequesting ? '正在搜尋所在位置..' : `${geolocation.current.lat}, ${geolocation.current.lng}`}
+        </h3>
+        <h3 className='title'>列出附近 {distanceFilter } 公里的打卡</h3>
+        {buttons}
+      </div>
+    );
+  }
+
+  renderModeButtons() {
+    const { home: { mode } } = this.props;
+    return (
+      <div className='operation-bar'>
+        <button className='btn' onClick={()=> this.handleSwitchDisplayMode(MODE.LIST)} disabled={mode == MODE.LIST}>列表模式</button>
+        <button className='btn' onClick={()=> this.handleSwitchDisplayMode(MODE.MAP)} disabled={mode == MODE.MAP}>地圖模式</button>
+      </div>
+    );
+  }
+
   render() {
     const { geolocation, checkinsByFilter, home } = this.props;
     return (
       <div>
-        <h1>列出附近 {checkinsByFilter.distanceFilter } 公里的打卡</h1>
-        <h2>目前位置: {geolocation.isRequesting ? '正在搜尋所在位置..' : `${geolocation.current.lat}, ${geolocation.current.lng}`}</h2>
-        <div>
-          <button onClick={()=> this.switchDistanceFilter(0.1)}>100 公尺</button>
-          <button onClick={()=> this.switchDistanceFilter(0.5)}>500 公尺</button>
-          <button onClick={()=> this.switchDistanceFilter(1)}>1 公里</button>
-          <button onClick={()=> this.switchDistanceFilter(5)}>5 公里</button>
-          <button onClick={()=> this.switchDistanceFilter(50)}>50 公里</button>
-          <button onClick={()=> this.switchDistanceFilter(500)}>500 公里</button>
-        </div>
-        <div>
-          <button onClick={()=> this.handleSwitchDisplayMode(MODE.LIST)}>列表模式</button>
-          <button onClick={()=> this.handleSwitchDisplayMode(MODE.MAP)}>地圖模式</button>
-        </div>
+        {this.renderDistanceFilterButtons()}
+        {this.renderModeButtons()}
         <section style={{height: '500px', width: '100%'}}>
           {(home.mode == MODE.MAP) ? this.renderMap(): this.renderList()}
         </section>

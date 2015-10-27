@@ -1,4 +1,25 @@
-@import ./_variables  
+@import ./_variables
+
 .map
   margin-top: bu()
   margin-bottom: bu()
+.operation-bar
+  display: block
+  clear: both
+  margin: bu() 0
+  text-align: right
+  .btn
+    border-radius: 0
+    box-shadow: 0px 3px darken($c-second, 10%)
+    &:focus
+      outline: none
+    &:disabled
+      background-color: darken($c-second, 3%)
+      box-shadow: 0px -3px darken($c-second, 10%), inset 0px 0px 2px darken($c-second, 10%)
+      transform: translateY(3px)
+      color: #DDD
+      &:hover
+        background-color: darken($c-second, 3%)
+  .title
+    margin-top: 0
+    margin-bottom: 0

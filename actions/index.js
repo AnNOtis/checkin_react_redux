@@ -212,7 +212,6 @@ export function requireLogin(data){
     dispatch(loadStorageAuth(data));
 
     const { auth: { user }, replaceState} = getState();
-    debugger
     if (!user) {
       replaceState(null, '/login');
     }

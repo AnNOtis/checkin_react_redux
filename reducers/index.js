@@ -11,7 +11,7 @@ import checkinForm from './checkinForm';
 
 import { MODE, SWITCH_DISPLAY_MODE } from '../actions'
 
-function home(state={mode: MODE.list}, action){
+function home(state={mode: MODE.LIST}, action){
   switch(action.type) {
     case SWITCH_DISPLAY_MODE:
       return Object.assign({}, state, {mode: action.mode})
