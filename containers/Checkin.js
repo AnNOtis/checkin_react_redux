@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { replaceState } from 'redux-router';
 import { connectReduxForm } from 'redux-form';
-import { checkin, previewCheckinPhoto, requestLocationPermission } from '../actions';
+import { checkin, previewCheckinPhoto, requestLocationPermission, requireLogin } from '../actions';
 import { isEmpty } from 'lodash';
 require('../css/form.sass')
 require('../css/button.sass')
@@ -19,7 +19,11 @@ function validateCheckin(data, props) {
   }
   return errors;
 }
-@connect((state)=>({ auth: state.auth , checkinForm: state.checkinForm}), {checkin, previewCheckinPhoto, requestLocationPermission, replaceState})
+
+@connect(
+  (state)=>({ auth: state.auth , checkinForm: state.checkinForm}),
+  {checkin, previewCheckinPhoto, requestLocationPermission, requireLogin}
+)
 @connectReduxForm({
   form: 'checkin',
   fields: ['name', 'comment', 'photo'],
@@ -27,16 +31,8 @@ function validateCheckin(data, props) {
 })
 export default class Checkin extends Component {
   componentDidMount() {
-    this.requireLogin();
+    this.props.requireLogin();
     this.props.requestLocationPermission();
-  }
-
-  requireLogin() {
-    const { auth: { user }, replaceState} = this.props;
-
-    if (!user) {
-      replaceState(null, '/login');
-    }
   }
 
   handleFileUploadOnChange(e){

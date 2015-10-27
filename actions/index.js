@@ -176,7 +176,8 @@ export function logout(){
 export function loadStorageAuth(){
   return function (dispatch, getState){
     const storateAuth = storage.get('auth')
-    if(!isEmpty(storateAuth)){
+    const authInState = getState().auth
+    if(!isEmpty(storateAuth) && isEmpty(authInState)){
       return dispatch(setAuth(storateAuth));
     }
   }
@@ -203,6 +204,18 @@ export function login(data){
         console.warn(error);
         dispatch(loginFailed(error));
       });
+  };
+}
+
+export function requireLogin(data){
+  return function (dispatch, getState) {
+    dispatch(loadStorageAuth(data));
+
+    const { auth: { user }, replaceState} = getState();
+    debugger
+    if (!user) {
+      replaceState(null, '/login');
+    }
   };
 }
 
