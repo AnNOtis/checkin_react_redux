@@ -12,20 +12,32 @@ export default class CheckinCard extends Component {
     }
   }
   render() {
-    const { checkin } = this.props;
+    const {
+      checkin: {
+        user,
+        address,
+        photo,
+        comment,
+        createdAt
+      }
+    } = this.props;
     return (
       <div className='card animated fadeIn' >
         <div className='card-header'>
           <div className='user'>
-            <img src={checkin.user.avatar.url}/>
+            <img src={user.avatar.url}/>
           </div>
           <div className='title'>{this.renderCheckinDescription()}</div>
-          <p className='subtitle'>{checkin.address}</p>
+          <p className='subtitle'>{address}</p>
         </div>
         <div className='card-body'>
-          {/*<div><img src={checkin.photo.url}/></div>*/}
-          { checkin.photo.photo.url &&
-            <div className='photo'><img src={checkin.photo.photo.url}/></div>
+          {
+            photo.photo.url &&
+              <div className='photo'><img src={photo.photo.url}/></div>
+          }
+          {
+            comment && comment.length !== 0 &&
+            <div className='comment'>{comment}</div>
           }
         </div>
       </div>
