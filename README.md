@@ -1,4 +1,7 @@
-# checkin_react_redux
+# checkin_react_redux (Client)
+
+## Prerequirement
+node v0.12.7 (suggestion)
 
 ## Setup
 1. Run `npm install` & `npm start`
