@@ -31,6 +31,10 @@ module.exports = {
         limit: 10000
       },
       {
+        test: /\.css$/,
+        loaders: ['style', 'css']
+      },
+      {
         test: /\.sass$/,
         loaders: ['style', 'css', 'sass?indentedSyntax']
       }
