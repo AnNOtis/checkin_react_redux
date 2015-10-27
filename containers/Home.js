@@ -142,6 +142,8 @@ export default class Home extends Component {
           <button onClick={()=> this.switchDistanceFilter(0.5)}>500 公尺</button>
           <button onClick={()=> this.switchDistanceFilter(1)}>1 公里</button>
           <button onClick={()=> this.switchDistanceFilter(5)}>5 公里</button>
+          <button onClick={()=> this.switchDistanceFilter(50)}>50 公里</button>
+          <button onClick={()=> this.switchDistanceFilter(500)}>500 公里</button>
         </div>
         <div>
           <button onClick={()=> this.handleSwitchDisplayMode(MODE.LIST)}>列表模式</button>
