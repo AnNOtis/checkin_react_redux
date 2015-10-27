@@ -248,3 +248,65 @@ export function signup(data){
       });
   };
 }
+
+export const CHECKIN_START = 'CHECKIN_START';
+export const CHECKIN_FAILED = 'CHECKIN_FAILED';
+export const CHECKIN_SUCCESS = 'CHECKIN_SUCCESS';
+export const PREVIEW_CHECKIN_PHOTO = 'PREVIEW_CHECKIN_PHOTO';
+
+export function checkinStart(data){
+  return {
+    type: CHECKIN_START,
+    data
+  };
+}
+
+export function checkinFailed(response){
+  return {
+    type: CHECKIN_FAILED,
+    errors: response.errors
+  };
+}
+
+export function checkinSuccess(response){
+  return {
+    type: CHECKIN_SUCCESS,
+    response
+  };
+}
+
+export function previewCheckinPhoto(previewPhoto){
+  return {
+    type: PREVIEW_CHECKIN_PHOTO,
+    previewPhoto
+  };
+}
+
+export function checkin(data){
+  return function (dispatch, getState) {
+    dispatch(checkinStart(data));
+    const { geolocation, auth } = getState();
+    const formData = new FormData();
+    formData.append('name', data.name);
+    formData.append('comment', data.comment);
+    formData.append('photo', data.photo);
+    formData.append('latitude', geolocation.current.lat);
+    formData.append('longitude', geolocation.current.lng);
+    formData.append('device_token', auth.deviceToken);
+    return apiClient(
+        'device/checkins',
+        {
+          method: 'POST',
+          body: formData
+        }
+      )
+      .then(json => {
+        dispatch(checkinSuccess(json));
+        dispatch(pushState(null, '/'));
+      })
+      .catch(error => {
+        console.warn(error);
+        dispatch(checkinFailed(error));
+      });
+  };
+}

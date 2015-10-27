@@ -34,7 +34,7 @@ export default class Header extends Component {
       <div className='header'>
         <div className='header-wrapper'>
           <Link className='header-column tl' to='/'>首頁</Link>
-          <Link className='header-column tc' to='/'>打卡</Link>
+          <Link className='header-column tc' to='/checkin'>打卡</Link>
           {this.renderUserStatus()}
         </div>
       </div>

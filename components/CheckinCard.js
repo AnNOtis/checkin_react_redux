@@ -23,7 +23,9 @@ export default class CheckinCard extends Component {
         </div>
         <div className='card-body'>
           {/*<div><img src={checkin.photo.url}/></div>*/}
-          <div className='photo'><img src='http://www.wallpaperhi.com/thumbnails/detail/20120712/sunset%20landscapes%20nature%20fields%20land%201920x1080%20wallpaper_www.wallpaperhi.com_41.jpg'/></div>
+          { checkin.photo.photo.url &&
+            <div className='photo'><img src={checkin.photo.photo.url}/></div>
+          }
         </div>
       </div>
     );

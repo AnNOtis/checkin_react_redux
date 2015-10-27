@@ -4,21 +4,20 @@ import App from './containers/App';
 import Home from './containers/Home';
 import Login from './containers/Login';
 import Signup from './containers/Signup';
+import Checkin from './containers/Checkin';
 import NotFound from './containers/NotFound';
 
 export default (
   <Route path='/' component={App}>
     <IndexRoute component={Home}/>
 
-    { /* Routes
-    <Route onEnter={requireLogin}>
-      <Route path='checkin' component={Checkin}/>
-    </Route>
-    */ }
+    <Route path='checkin' component={Checkin}/>
 
     <Route path='login' component={Login}/>
     <Route path='signup' component={Signup}/>
     { /* Routes
+    <Route onEnter={requireLogin}>
+    </Route>
     */ }
 
     { /* Catch all route */ }

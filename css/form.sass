@@ -21,8 +21,10 @@
       padding-right: bu(0.5)
     .btn
       margin-left: bu(0.5)
+    img
+      max-width: 100%
 
-  label, input, .error
+  label, input, .error, textarea
     display: block
     width: 100%
     line-height: 2
@@ -34,7 +36,7 @@
     padding-left: bu()
     padding-right: bu()
 
-  input
+  input, textarea
     background-color: $c-grey-light
     border: 0
     border-radius: 5px
@@ -43,3 +45,5 @@
     &:focus
       outline: none
       box-shadow: inset 0px 0px 3px $c-grey
+  textarea
+    padding: bu(0.5) bu()

@@ -7,6 +7,7 @@ import geolocation from './geolocation';
 import checkinsByFilter from './checkinsByFilter';
 import auth from './auth';
 import signupForm from './signupForm';
+import checkinForm from './checkinForm';
 
 import { MODE, SWITCH_DISPLAY_MODE } from '../actions'
 
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
   geolocation,
   auth,
   signupForm,
+  checkinForm,
   form: formReducer,
   router
 });
