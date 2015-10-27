@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 require('../css/card.sass');
+require('../css/animate.css');
 
 export default class CheckinCard extends Component {
   renderCheckinDescription(){
@@ -13,7 +14,7 @@ export default class CheckinCard extends Component {
   render() {
     const { checkin } = this.props;
     return (
-      <div className='card' >
+      <div className='card animated fadeIn' >
         <div className='card-header'>
           <div className='user'>
             <img src={checkin.user.avatar.url}/>

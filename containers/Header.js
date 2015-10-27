@@ -20,8 +20,8 @@ export default class Header extends Component {
     } else {
       return (
         <div className='header-column tr' onClick={logout}>
-          <span>{auth.user.name} 登出</span>
-          <img src={auth.user.avatar.url}/>
+          <span>登出</span>
+          <img src={auth.user.avatar.url} alt={auth.user.name} />
         </div>
       );
     }

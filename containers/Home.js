@@ -13,6 +13,7 @@ import {
 import List from '../components/List';
 import CheckinCard from '../components/CheckinCard';
 
+require('../css/home.sass')
 const pugImg = require('../assets/pug.png')
 
 function mapStateToProps(state) {
@@ -110,7 +111,10 @@ export default class Home extends Component {
     const { markers } = this.props;
     return(
       <GoogleMap
-        containerProps={{ style: { height: '100%', width: '100%' } }}
+        containerProps={{
+          className: 'map',
+          style: { height: '100%', width: '100%' }
+        }}
         defaultZoom={12}
         defaultCenter={this.currentMapCenter()}
       >

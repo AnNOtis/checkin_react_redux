@@ -1,17 +1,22 @@
 import React, { Component, PropTypes } from 'react';
 const loadingImg = require('../assets/loading.gif');
+require('../css/list.sass');
 
 export default class List extends Component {
   render() {
     const { isFetching, items, renderItem } = this.props;
 
     const isEmpty = items.length === 0;
-    if (isEmpty && isFetching) {
-      return <h2><img src={loadingImg} /></h2>;
+    if(isEmpty && isFetching) {
+      return (<div className='list'><div className='loading'><img src={loadingImg} /></div></div>);
+    }
+
+    if(isEmpty) {
+      return (<div className='list'><div className='empty'>找不到喔</div></div>);
     }
 
     return (
-      <div>
+      <div className='list'>
         {items.map(renderItem)}
       </div>
     );

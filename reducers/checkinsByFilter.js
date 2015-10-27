@@ -17,10 +17,11 @@ const initialState = {
 export default function checkinsByFilter(state = initialState, action) {
   switch (action.type) {
   case FETCH_CHECKINS_START:
-    return merge({}, state, {
+    return {
       isFetching: true,
-      distanceFilter: action.radius
-    });
+      distanceFilter: action.radius,
+      checkins: []
+    };
   case FETCH_CHECKINS_SUCCESS:
     return Object.assign({}, state, {
       isFetching: false,
