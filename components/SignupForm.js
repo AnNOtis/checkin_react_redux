@@ -86,7 +86,7 @@ export default class SignupForm extends Component {
           </div>
           <div className='form-field'>
             <label>Avatar</label>
-            <input type="file" onChange={this.handleFileUploadOnChange.bind(this)}/>
+            <input type='file' accept='image/*' onChange={this.handleFileUploadOnChange.bind(this)}/>
           </div>
           <div className='form-field tr'>
             <Link className='btn btn--unstyle' to='/login'>back to login</Link>
