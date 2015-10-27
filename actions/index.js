@@ -1,5 +1,5 @@
 import fetch from 'isomorphic-fetch';
-import { pushState } from 'redux-router';
+import { pushState, replaceState } from 'redux-router';
 import { isEmpty } from 'lodash';
 import storage from 'store';
 import uuid from 'uuid';
@@ -123,7 +123,8 @@ export function switchDisplayMode(mode){
 export const LOGIN_START = 'LOGIN_START';
 export const LOGIN_FAILED = 'LOGIN_FAILED';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
-export const LOGOUT = 'LOGOUT';
+export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
+
 export const SET_AUTH = 'SET_AUTH';
 export function loginStart(data){
   return {
@@ -154,11 +155,22 @@ export function setAuth(auth){
   };
 }
 
-export function logout(){
+export function logoutSuccess(){
   storage.remove('auth')
   return {
-    type: LOGOUT
+    type: LOGOUT_SUCCESS
   };
+}
+
+export function logout(){
+  return (dispatch, getState) => {
+    return dispatch(()=>{
+      return new Promise(()=>{
+        dispatch(logoutSuccess());
+        dispatch(replaceState(null, '/'));
+      })
+    });
+  }
 }
 
 export function loadStorageAuth(){

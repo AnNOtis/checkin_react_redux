@@ -2,7 +2,7 @@ import {
   LOGIN_START,
   LOGIN_FAILED,
   LOGIN_SUCCESS,
-  LOGOUT,
+  LOGOUT_SUCCESS,
   SET_AUTH
 } from '../actions';
 
@@ -18,7 +18,7 @@ export default function auth(state = {}, action) {
       state,
       { user: action.response.user, deviceToken: action.response.deviceToken, errorMessage: null }
     );
-  case LOGOUT:
+  case LOGOUT_SUCCESS:
     return {};
   case SET_AUTH:
     return action.auth;
