@@ -15,10 +15,6 @@ export default (
 
     <Route path='login' component={Login}/>
     <Route path='signup' component={Signup}/>
-    { /* Routes
-    <Route onEnter={requireLogin}>
-    </Route>
-    */ }
 
     { /* Catch all route */ }
     <Route path='*' component={NotFound} status={404} />

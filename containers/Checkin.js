@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { replaceState } from 'redux-router';
 import { connectReduxForm } from 'redux-form';
 import { checkin, previewCheckinPhoto, requestLocationPermission } from '../actions';
 import { isEmpty } from 'lodash';
@@ -18,7 +19,7 @@ function validateCheckin(data, props) {
   }
   return errors;
 }
-@connect((state)=>({checkinForm: state.checkinForm}), {checkin, previewCheckinPhoto, requestLocationPermission})
+@connect((state)=>({ auth: state.auth , checkinForm: state.checkinForm}), {checkin, previewCheckinPhoto, requestLocationPermission, replaceState})
 @connectReduxForm({
   form: 'checkin',
   fields: ['name', 'comment', 'photo'],
@@ -26,7 +27,16 @@ function validateCheckin(data, props) {
 })
 export default class Checkin extends Component {
   componentDidMount() {
+    this.requireLogin();
     this.props.requestLocationPermission();
+  }
+
+  requireLogin() {
+    const { auth: { user }, replaceState} = this.props;
+
+    if (!user) {
+      replaceState(null, '/login');
+    }
   }
 
   handleFileUploadOnChange(e){
